@@ -1,10 +1,12 @@
+const client = require("../models/client")
+
+
+async function login(req, res) {
+
+}
 
 async function register() {
-    
-}
-
-async function login() {
 
 }
 
-module.exports = { login, register }
+module.exports = { login, register };

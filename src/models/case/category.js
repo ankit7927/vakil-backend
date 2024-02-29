@@ -5,7 +5,8 @@ const categorySchema = mongoose.Schema({
         type: String,
         required: true
     },
-    logo: String
+    logo: String,
+    subcategories: [mongoose.Schema.ObjectId]
 })
 
 module.exports = mongoose.model("Category", categorySchema);

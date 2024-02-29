@@ -6,6 +6,7 @@ const clientSchema = mongoose.Schema({
             type: String,
             required: true
         },
+        email: String,
         male: Boolean,
         martial_status: {
             type: String,
