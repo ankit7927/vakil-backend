@@ -22,7 +22,7 @@ const clientSchema = mongoose.Schema({
         }
     },
     disabled: Boolean,
-    password:String,
+    password: String,
     contact: {
         type: Number,
         required: true
@@ -37,6 +37,10 @@ const clientSchema = mongoose.Schema({
             type: Number,
             defeult: 0
         },
+    },
+    role: {
+        type: String,
+        enum: ["admin", "client", "lawyer", "staff"]
     }
 })
 

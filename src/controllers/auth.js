@@ -31,6 +31,7 @@ authController.login = async (req, res, next) => {
 authController.register = async (req, res, next) => {
     const data = req.body;
     data.contact = 123456789;
+    data.role = "client";
     const new_client = await client.create(data);
     if (new_client) {
         res.json({ token: genrateToken(new_client._id) });
