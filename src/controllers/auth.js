@@ -1,17 +1,40 @@
 const client = require("../models/client")
 const otpGenerator = require('otp-generator');
 const otpModel = require("../models/otpModel");
+const { genrateToken } = require("../utils/jwt");
 
 const authController = {};
 
+/**
+ * this is a temp auth implimentations.
+ * 
+ * any user client or lawyer can login using only mobile otp
+ * but lawyer registration will be complete followed.
+ * 
+ * client registration is such that during otp verification,
+ * it will be checked that is client is registred or not.
+ */
 authController.login = async (req, res, next) => {
-    const email = req.body.email;
-    if (!email) return res.status(401).json({ message: "email required" });
+    const { email, password } = req.body;
+    if (!email || !password) 
+        return res.status(404).json({ message: "add fileds are required" });
+    const existing_client = await client.findOne({ email: email }).select("password").lean().exec();
 
+    if (!existing_client) return res.status(404).json({ message: "client with email is not found" });
+
+    console.log(existing_client);
+    if (existing_client.password === password) {
+        res.json({ token: genrateToken(existing_client._id) });
+    } else res.status(400).json({ message: "wrong password" });
 }
 
-authController.register = async () => {
-
+authController.register = async (req, res, next) => {
+    const data = req.body;
+    data.contact = 123456789;
+    const new_client = await client.create(data);
+    if (new_client) {
+        res.json({ token: genrateToken(new_client._id) });
+    } else res.status(500).json({ message: "something went wrong" });
 }
 
 authController.sendOtp = async (req, res, next) => {
