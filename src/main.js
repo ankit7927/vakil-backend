@@ -9,6 +9,10 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, }));
+if (process.env.NODE_ENV="dev") {
+    const morgan = require("morgan");
+    app.use(morgan("dev"))
+}
 
 app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
