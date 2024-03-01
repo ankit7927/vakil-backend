@@ -1,7 +1,14 @@
+const { isValidObjectId } = require("mongoose");
 const { category } = require("../models/category");
 
 
 const categoryController = {};
+
+categoryController.allCategory = async (req, res, next) =>{
+    const allCategory = await category.find();
+    res.json(allCategory);
+}
+
 
 categoryController.createCategory = async (req, res, next) => {
     const data = req.body;
@@ -17,8 +24,9 @@ categoryController.createCategory = async (req, res, next) => {
 categoryController.updateCategory = async (req, res, next) => {
     const data = req.body;
     if (!data._id) return res.status(404).json({ message: "id is required" });
+    else if (!isValidObjectId(data._id)) return res.status(404).json({ message: "its not an object id" });
 
-    const existing = await category.findOneById({ _id: data._id });
+    const existing = await category.findOne({ _id: data._id });
     if (!existing) res.status(404).json({ message: "category not found" });
 
     existing.name = data.name;

@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: false, }));
 app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
 app.use("/auth", require("./routes/authRoute"));
+app.use("/category", require("./routes/categoryRoute"));
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 5000;
