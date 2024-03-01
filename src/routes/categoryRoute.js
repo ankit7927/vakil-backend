@@ -7,4 +7,8 @@ router.route("/category")
     .post(categoryController.createCategory)
     .put(categoryController.updateCategory)
 
+router.route("/subcategory")
+    .post(categoryController.addSubCategory)
+    .delete(categoryController.deleteSubCategory)
+
 module.exports = router;
