@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express");
 const connectDB = require("./configs/db.config");
 const mongoose = require("mongoose");
@@ -9,18 +10,22 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, }));
 
-app.use("/", (req, res) => { res.json({ message: "OK" }) })
+app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
-connectDB()
+app.use("/auth", require("./routes/authRoute"));
+
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 5000;
+    console.log(err.message, err.stack);
+    res.status(statusCode).json({ message: err.message })
+});
+
+connectDB();
 
 mongoose.connection.once("open", () => {
     console.log("connected to database");
-    app.listen(port, "0.0.0.0", () => {
-        console.log("server started");
-    })
-})
+    app.listen(port, "0.0.0.0", () => console.log("server started"));
+});
 
-mongoose.connection.on("error", (error) => {
-    console.log(error);
-})
+mongoose.connection.on("error", (error) => console.log(error));
 
