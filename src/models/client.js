@@ -1,29 +1,28 @@
 const mongoose = require("mongoose")
 
 const clientSchema = mongoose.Schema({
-    profile: {
-        name: {
-            type: String,
-            required: true
-        },
-        email: String,
-        male: Boolean,
-        martial_status: {
-            type: String,
-            enum: {
-                values: ['Married', 'Unmarried'],
-                message: '{VALUE} is not supported'
-            }
-        },
-        work_status: {
-            type: String,
-            enum: {
-                values: ['employeed', 'unemployed'],
-                message: '{VALUE} is not supported'
-            }
-        },
-        disabled: Boolean,
+    name: {
+        type: String,
+        required: true
     },
+    email: String,
+    male: Boolean,
+    martial_status: {
+        type: String,
+        enum: {
+            values: ['Married', 'Unmarried'],
+            message: '{VALUE} is not supported'
+        }
+    },
+    work_status: {
+        type: String,
+        enum: {
+            values: ['employeed', 'unemployed'],
+            message: '{VALUE} is not supported'
+        }
+    },
+    disabled: Boolean,
+    password:String,
     contact: {
         type: Number,
         required: true
