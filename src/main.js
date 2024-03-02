@@ -18,6 +18,7 @@ app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
 app.use("/auth", require("./routes/authRoute"));
 app.use("/category", require("./routes/categoryRoute"));
+app.use("/client", require("./routes/clientRoute"));
 
 app.use((err, req, res, next) => {
     const statusCode = err.status || 500;
