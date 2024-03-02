@@ -4,4 +4,4 @@ const errorGen = (message, status)=>{
     throw error
 }
 
-module.exports = {errorGen};
+module.exports = errorGen;

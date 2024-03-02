@@ -1,6 +1,6 @@
 const client = require("../models/client.model");
 const lawyerModel = require("../models/lawyer.model");
-const { errorGen } = require("../utils/errorGen");
+const errorGen = require("../utils/errorGen");
 const { genrateToken } = require("../utils/jwt");
 
 const authService = {};
