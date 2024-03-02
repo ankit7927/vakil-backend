@@ -35,6 +35,17 @@ authController.register = async (req, res, next) => {
     }
 }
 
+authController.registerLawyer = async (req, res, next) => {
+    const data = req.body;
+    // TODO validate the incoming data
+    try {
+        res.json(await authService.registerLawyer(data))
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 authController.sendOtp = async (req, res, next) => {
     const email = req.body.email;
     try {

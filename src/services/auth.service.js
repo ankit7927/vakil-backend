@@ -1,4 +1,5 @@
 const client = require("../models/client.model");
+const lawyerModel = require("../models/lawyer.model");
 const { errorGen } = require("../utils/errorGen");
 const { genrateToken } = require("../utils/jwt");
 
@@ -21,6 +22,15 @@ authService.register = async (data) => {
     const new_client = await client.create(data);
     if (new_client) {
         return { token: genrateToken(new_client._id) };
+    } else errorGen("something went wrong");
+}
+
+
+authService.registerLawyer = async (data) => {
+    data.role = "lawyer";
+    const newLawyer = await lawyerModel.create(data);
+    if (newLawyer) {
+        return { message: "account created and waiting for verification." };
     } else errorGen("something went wrong");
 }
 
