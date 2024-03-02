@@ -7,11 +7,12 @@ const lawyerSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        //required:true
+        required: true,
+        unique: true
     },
     birth_date: {
         type: Date,
-        //required:true
+        required: true
     },
     experience: {
         year: {
@@ -42,10 +43,19 @@ const lawyerSchema = mongoose.Schema({
         type: Number,
         default: 1
     },
-    qualifications: [String],
+    qualifications: {
+        type: [String],
+        required: true
+    },
     specializations: {
-        categories: [String],
-        subcategories: [String]
+        categories: {
+            type: [String],
+            required: true
+        },
+        subcategories: {
+            type: [String],
+            required: true
+        },
     },
     martial_status: {
         type: String,
@@ -112,13 +122,15 @@ const lawyerSchema = mongoose.Schema({
 
     // account handling only for admin.
     verified: {
-        type:Boolean,
-        default:false
+        type: Boolean,
+        default: false
     },
     disabled: {
-        type:Boolean,
-        default:false
+        type: Boolean,
+        default: false
     },
+    // password for testing pourpse
+    password: String,
 });
 
 module.exports = mongoose.model("Lawyer", lawyerSchema);

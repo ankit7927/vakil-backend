@@ -5,7 +5,11 @@ const clientSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    email: String,
+    email: {
+        type: String,
+        //required:true,
+        unique:true
+    },
     gender: {
         type: String,
         enum: {
@@ -28,7 +32,6 @@ const clientSchema = mongoose.Schema({
         }
     },
     disabled: Boolean,
-    password: String,
     contact: {
         type: Number,
         required: true
@@ -52,6 +55,8 @@ const clientSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
+    // password for testing pourpse
+    password: String,
 })
 
 module.exports = mongoose.model("Client", clientSchema);
