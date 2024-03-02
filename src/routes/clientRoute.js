@@ -9,4 +9,6 @@ router.route("/client/:clientId")
     .get(clientController.getClient)
     .put(clientController.updateClientProfile)
 
+router.route("/wallet/:clientId")
+    .get(clientController.getClientWallet)
 module.exports = router;

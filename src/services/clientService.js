@@ -31,4 +31,13 @@ clientService.updateClientProfile = async (clientId, data) => {
     else errorGen("wrong data provided", 500);
 }
 
+clientService.getClientWallet = async (clientId) => {
+    const existingClient = await client.findById({ _id: clientId })
+        .select("wallet").lean().exec();
+        
+    if (!existingClient) errorGen("client not found", 404);
+    console.log(existingClient);
+    return existingClient;
+}
+
 module.exports = clientService;

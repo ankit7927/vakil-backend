@@ -36,5 +36,18 @@ clientController.updateClientProfile = async (req, res, next) => {
     }
 }
 
+clientController.getClientWallet = async (req, res, next) => {
+    const clientId = req.params.clientId;
+    
+    if (!isValidObjectId(clientId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await clientService.getClientWallet(clientId));
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = clientController;

@@ -17,10 +17,8 @@ authService.login = async (email, password) => {
 
 
 authService.register = async (data) => {
-    data.contact = 123456789;
     data.role = "client";
     const new_client = await client.create(data);
-
     if (new_client) {
         return { token: genrateToken(new_client._id) };
     } else errorGen("something went wrong");
