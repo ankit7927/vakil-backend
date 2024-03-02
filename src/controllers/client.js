@@ -23,5 +23,18 @@ clientController.getClient = async (req, res, next) => {
     }
 }
 
+clientController.updateClientProfile = async (req, res, next) => {
+    const clientId = req.params.clientId;
+    const data = req.body;
+    if (!isValidObjectId(clientId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await clientService.updateClientProfile(clientId, data));
+    } catch (error) {
+        next(error);
+    }
+}
+
 
 module.exports = clientController;

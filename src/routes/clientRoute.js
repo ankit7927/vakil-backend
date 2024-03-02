@@ -7,5 +7,6 @@ router.route("/client")
 
 router.route("/client/:clientId")
     .get(clientController.getClient)
+    .put(clientController.updateClientProfile)
 
 module.exports = router;
