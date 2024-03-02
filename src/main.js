@@ -20,8 +20,7 @@ app.use("/auth", require("./routes/authRoute"));
 app.use("/category", require("./routes/categoryRoute"));
 
 app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 5000;
-    console.log(err.message, err.stack);
+    const statusCode = err.status || 500;
     res.status(statusCode).json({ message: err.message })
 });
 

@@ -1,7 +1,6 @@
-const client = require("../models/client")
 const otpGenerator = require('otp-generator');
 const otpModel = require("../models/otpModel");
-const { genrateToken } = require("../utils/jwt");
+const authService = require("../services/authService");
 
 const authController = {};
 
@@ -18,24 +17,22 @@ authController.login = async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) 
         return res.status(404).json({ message: "add fileds are required" });
-    const existing_client = await client.findOne({ email: email }).select("password").lean().exec();
 
-    if (!existing_client) return res.status(404).json({ message: "client with email is not found" });
-
-    console.log(existing_client);
-    if (existing_client.password === password) {
-        res.json({ token: genrateToken(existing_client._id) });
-    } else res.status(400).json({ message: "wrong password" });
+    try {
+        res.json(await authService.login(email, password))
+    } catch (error) {
+        next(error)
+    }
 }
 
 authController.register = async (req, res, next) => {
     const data = req.body;
-    data.contact = 123456789;
-    data.role = "client";
-    const new_client = await client.create(data);
-    if (new_client) {
-        res.json({ token: genrateToken(new_client._id) });
-    } else res.status(500).json({ message: "something went wrong" });
+    
+    try {
+        res.json(await authService.register(data))
+    } catch (error) {
+        next(error)
+    }
 }
 
 authController.sendOtp = async (req, res, next) => {
