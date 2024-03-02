@@ -1,6 +1,6 @@
 const otpGenerator = require('otp-generator');
-const otpModel = require("../models/otpModel");
-const authService = require("../services/authService");
+const otpModel = require("../models/otp.model");
+const authService = require("../services/auth.service");
 
 const authController = {};
 

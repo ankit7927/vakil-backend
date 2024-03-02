@@ -1,4 +1,4 @@
-const client = require("../models/client");
+const client = require("../models/client.model");
 const errorGen = require("../utils/errorGen");
 
 const clientService = {};

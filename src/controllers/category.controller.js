@@ -1,5 +1,5 @@
 const { isValidObjectId } = require("mongoose");
-const categoryService = require("../services/categoryService");
+const categoryService = require("../services/category.service");
 
 const categoryController = {};
 

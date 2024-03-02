@@ -16,9 +16,9 @@ if (process.env.NODE_ENV="dev") {
 
 app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
-app.use("/auth", require("./routes/authRoute"));
-app.use("/category", require("./routes/categoryRoute"));
-app.use("/client", require("./routes/clientRoute"));
+app.use("/auth", require("./routes/auth.route"));
+app.use("/category", require("./routes/category.route"));
+app.use("/client", require("./routes/client.route"));
 
 app.use((err, req, res, next) => {
     const statusCode = err.status || 500;

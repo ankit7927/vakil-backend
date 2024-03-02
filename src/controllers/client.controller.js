@@ -1,5 +1,5 @@
 const { isValidObjectId } = require("mongoose");
-const clientService = require("../services/clientService");
+const clientService = require("../services/client.service");
 
 const clientController = {};
 
