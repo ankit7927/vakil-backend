@@ -35,7 +35,7 @@ const clientSchema = mongoose.Schema({
     wallet: {
         balance: {
             type: Number,
-            defeult: 0
+            default: 0
         },
     },
     role: {
