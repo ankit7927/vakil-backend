@@ -17,7 +17,7 @@ if (process.env.NODE_ENV="dev") {
 app.get("/", (req, res) => { res.json({ message: "OK" }) });
 
 app.use("/auth", require("./routes/auth.route"));
-app.use("/category", require("./routes/category.route"));
+app.use("/case", require("./routes/case.route"));
 app.use("/client", require("./routes/client.route"));
 app.use("/lawyer", require("./routes/lawyer.route"));
 

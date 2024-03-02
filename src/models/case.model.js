@@ -1,13 +1,13 @@
 const mongoose = require("mongoose")
 
-const categorySchema = mongoose.Schema({
+const caseSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
         unique: true
     },
     logo: String,
-    subcategories: [{
+    subCases: [{
         name: {
             type: String,
             required: true
@@ -17,4 +17,4 @@ const categorySchema = mongoose.Schema({
     }]
 })
 
-module.exports = mongoose.model("Category", categorySchema);
+module.exports = mongoose.model("Case", caseSchema);
