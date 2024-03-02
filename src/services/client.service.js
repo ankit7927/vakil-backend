@@ -14,27 +14,17 @@ clientService.getClient = async (clientId) => {
 }
 
 clientService.updateClientProfile = async (clientId, data) => {
-    const existingClient = await client.findById({ _id: clientId });
+    const updated = await client.findOneAndUpdate({ _id: clientId },
+        { "$set": data });
 
-    if (!existingClient) errorGen("client not found", 404);
-
-    existingClient.name = data.name || existingClient.name;
-    existingClient.email = data.email || existingClient.email;
-    existingClient.martial_status = data.martial_status || existingClient.martial_status;
-    existingClient.work_status = data.work_status || existingClient.work_status;
-    existingClient.disabled = data.disabled || existingClient.disabled;
-    existingClient.contact = data.contact || existingClient.contact;
-    // TODO update client image
-
-    const update = await existingClient.save();
-    if (update) return { message: "client profile update" };
+    if (updated) return { message: "client profile update" };
     else errorGen("wrong data provided", 500);
 }
 
 clientService.getClientWallet = async (clientId) => {
     const existingClient = await client.findById({ _id: clientId })
         .select("wallet").lean().exec();
-        
+
     if (!existingClient) errorGen("client not found", 404);
     console.log(existingClient);
     return existingClient;
