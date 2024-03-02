@@ -6,7 +6,13 @@ const clientSchema = mongoose.Schema({
         required: true
     },
     email: String,
-    male: Boolean,
+    gender: {
+        type: String,
+        enum: {
+            values: ['Male', 'Female', "Other"],
+            message: '{VALUE} is not supported'
+        }
+    },
     martial_status: {
         type: String,
         enum: {
@@ -41,7 +47,11 @@ const clientSchema = mongoose.Schema({
     role: {
         type: String,
         enum: ["admin", "client", "lawyer", "staff"]
-    }
+    },
+    disabled: {
+        type:Boolean,
+        default:false
+    },
 })
 
 module.exports = mongoose.model("Client", clientSchema);
