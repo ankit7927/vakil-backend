@@ -9,4 +9,7 @@ router.route("/lawyer/:lawyerId")
     .get(lawyerController.getLawyer)
     .put(lawyerController.updateLawyer)
 
+router.route("/wallet/:lawyerId")
+    .get(lawyerController.getWallet)
+
 module.exports = router;

@@ -26,7 +26,7 @@ lawyerController.getLawyer = async (req, res, next) => {
 lawyerController.updateLawyer = async (req, res, next) => {
     const lawyerId = req.params.lawyerId;
     const data = req.body;
-    
+
     if (!isValidObjectId(lawyerId))
         return res.status(404).json({ message: "its not an object id" });
 
@@ -36,5 +36,19 @@ lawyerController.updateLawyer = async (req, res, next) => {
         next(error)
     }
 }
+
+lawyerController.getWallet = async (req, res, next) => {
+    const lawyerId = req.params.lawyerId;
+
+    if (!isValidObjectId(lawyerId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await lawyerService.getWallet(lawyerId));
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 module.exports = lawyerController;

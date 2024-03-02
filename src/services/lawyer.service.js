@@ -24,4 +24,11 @@ lawyerService.updateLawyer = async (lawyerId, data) => {
     else return { message: "lawyer updated" };
 }
 
+lawyerService.getWallet = async (lawyerId) => {
+    const lawyer = await lawyerModel.findOne({ _id: lawyerId })
+        .select("wallet").lean().exec()
+
+    if (!lawyer) errorGen("lawyer not found", 404);
+    return lawyer;
+}
 module.exports = lawyerService;
