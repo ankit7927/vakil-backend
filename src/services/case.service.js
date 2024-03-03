@@ -21,12 +21,21 @@ casesService.updateCase = async (caseId, data) => {
     await existing.save();
 }
 
-casesService.addSubcases = async (caseId, data) => {
-    const existingCase = await caseModel.findOneAndUpdate({ _id: caseId },
-        { "$push": { subCases: { name: data.name, info: data.info } } });
+casesService.deleteCase = async (caseId) =>{
+    const dele = await caseModel.findByIdAndDelete({_id:caseId});
+    if (dele) return {message:"case deleted"};
+    errorGen("case not found", 404);
+}
 
-    if (existingCase) return { message: "subcases added" };
-    else errorGen("something went wrong");
+casesService.addSubcases = (caseId, data) => {
+    let dx = [];
+    data.forEach(async element => {
+        const existingCase = await caseModel.findOneAndUpdate({ _id: caseId },
+            { "$push": { subCases: { name: element.name, info: element.info } } });
+        
+        if (existingCase) dx.push(existingCase);
+    });
+    return { message: "subcases added", result:dx };
 }
 
 casesService.deleteSubcases = async (caseId, subCaseId) => {

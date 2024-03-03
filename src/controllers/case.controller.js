@@ -31,15 +31,28 @@ caseController.updateCase = async (req, res, next) => {
     }
 }
 
+caseController.deleteCase = async (req, res, next) => {
+    const caseId = req.params.caseId;
+
+    if (!isValidObjectId(caseId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await casesService.deleteCase(caseId));
+    } catch (error) {
+        next(error)
+    }
+}
+
 caseController.addSubCase = async (req, res, next) => {
-    const data = { caseId, name, info } = req.body;
-    if (!caseId || !name || !info)
-        return res.status(404).json({ message: "all fields are required" });
+    const { caseId, subcases } = req.body;
+    if (!caseId)
+        return res.status(404).json({ message: "case id is required" });
     else if (!isValidObjectId(caseId))
         return res.status(404).json({ message: "its not an object id" });
 
     try {
-        res.json(await casesService.addSubcases(caseId, data));
+        res.json(casesService.addSubcases(caseId, subcases));
     } catch (error) {
         next(error)
     }

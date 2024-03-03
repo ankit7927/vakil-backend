@@ -8,6 +8,7 @@ router.route("/case")
 
 router.route("/case/:caseId")
     .put(caseController.updateCase)
+    .delete(caseController.deleteCase)
 
 router.route("/subcase")
     .post(caseController.addSubCase)
