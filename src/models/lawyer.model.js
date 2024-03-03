@@ -129,6 +129,10 @@ const lawyerSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    followers: {
+        type: Number,
+        default: 0
+    },
     // password for testing pourpse
     password: String,
 });

@@ -55,6 +55,7 @@ const clientSchema = mongoose.Schema({
         type:Boolean,
         default:false
     },
+    followed_lawyers:[String],
     // password for testing pourpse
     password: String,
 })
