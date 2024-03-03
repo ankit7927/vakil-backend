@@ -11,4 +11,9 @@ router.route("/client/:clientId")
 
 router.route("/wallet/:clientId")
     .get(clientController.getClientWallet)
+
+router.route("/follow/:lawyerId")
+    .post(clientController.toggleFollow)
+
+
 module.exports = router;

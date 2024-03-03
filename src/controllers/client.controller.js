@@ -38,7 +38,7 @@ clientController.updateClientProfile = async (req, res, next) => {
 
 clientController.getClientWallet = async (req, res, next) => {
     const clientId = req.params.clientId;
-    
+
     if (!isValidObjectId(clientId))
         return res.status(404).json({ message: "its not an object id" });
 
@@ -49,5 +49,20 @@ clientController.getClientWallet = async (req, res, next) => {
     }
 }
 
+
+clientController.toggleFollow = async (req, res, next) => {
+    // TODO this controller will be only access by authenticated clients
+    // TODO so that clientId can be extracted from token and lawyerId from req.params.lawyerId 
+    const { clientId, lawyerId } = req.body;
+
+    if (!isValidObjectId(clientId) || !isValidObjectId(lawyerId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await clientService.toggleFollow(clientId, lawyerId));
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = clientController;
