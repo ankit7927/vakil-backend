@@ -65,4 +65,30 @@ clientController.toggleFollow = async (req, res, next) => {
     }
 }
 
+clientController.addReview = async (req, res, next) => {
+    // client should be extracted from token
+    const data = req.body;
+    if (!isValidObjectId(data.clientId) || !isValidObjectId(data.lawyerId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await clientService.addReview(data));
+    } catch (error) {
+        next(error);
+    }
+}
+
+clientController.removeReview = async (req, res, next) => {
+    // client should be extracted from token
+    const { lawyerId, reviewId } = req.body;
+    if (!isValidObjectId(reviewId) || !isValidObjectId(lawyerId))
+        return res.status(404).json({ message: "its not an object id" });
+
+    try {
+        res.json(await clientService.removeReview(lawyerId, reviewId));
+    } catch (error) {
+        next(error);
+    }
+}
+
 module.exports = clientController;

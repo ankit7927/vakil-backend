@@ -1,5 +1,6 @@
 const clientModel = require("../models/client.model");
 const lawyerModel = require("../models/lawyer.model");
+const reviewModel = require("../models/review.model");
 const errorGen = require("../utils/errorGen");
 
 const clientService = {};
@@ -51,6 +52,31 @@ clientService.toggleFollow = async (clientId, lawyerId) => {
     }
 
     return { message: "followed toggled" };
+}
+
+clientService.addReview = async (data) => {
+    const clawyer = await lawyerModel.findById({ _id: data.lawyerId });
+
+    const nweR = {
+        clientId: data.clientId,
+        name: data.name,
+        image: data.image,
+        ratings: data.ratings,
+        comment: data.comment
+    };
+
+    await clawyer.addReviewAndUpdate(nweR);
+
+    return { message: "review added" };
+}
+
+clientService.removeReview = async (lawyerId, reviewId) => {
+    const clawyer = await lawyerModel.findById({ _id: lawyerId });
+    if (clawyer) {
+        await clawyer.removeReviewAndUpdate(reviewId);
+        return { message: "review deleted" };
+    } errorGen("review not found", 404);
+
 }
 
 module.exports = clientService;

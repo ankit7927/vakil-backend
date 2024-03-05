@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const reviewModel = require("./review.model");
 
 const lawyerSchema = mongoose.Schema({
     name: {
@@ -133,8 +134,52 @@ const lawyerSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    ratings: {
+        type: Number,
+        default: 0
+    },
+    reviews: [{
+        clientId: {
+            type: String,
+            unique: true
+        },
+        name: String,
+        image: String,
+        ratings: {
+            type: Number,
+            default: 0,
+            enum: [0, 1, 2, 3, 4, 5]
+        },
+        comment: String
+    }],
     // password for testing pourpse
     password: String,
 });
 
+lawyerSchema.methods.addReviewAndUpdate = async function (newReview) {
+
+    this.reviews.push(newReview);
+    const totalRatings = this.reviews.reduce((acc, review) => acc + review.ratings, 0);
+    const newRating = totalRatings / this.reviews.length;
+    this.ratings = newRating;
+
+    await this.save();
+}
+
+lawyerSchema.methods.removeReviewAndUpdate = async function (reviewId) {
+    const index = this.reviews.findIndex(re => re._id === reviewId);
+    console.log(index);
+    if (index !== -1) {
+        this.reviews.splice(index, 1);
+
+        const totalRatings = this.reviews.reduce((acc, review) => acc + review.ratings, 0);
+
+        const newRating = this.reviews.length > 0
+            ? totalRatings / this.reviews.length
+            : 0;
+
+        this.ratings = newRating;
+        await this.save();
+    }
+}
 module.exports = mongoose.model("Lawyer", lawyerSchema);

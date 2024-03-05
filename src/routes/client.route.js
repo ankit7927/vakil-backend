@@ -15,5 +15,8 @@ router.route("/wallet/:clientId")
 router.route("/follow/:lawyerId")
     .post(clientController.toggleFollow)
 
+router.route("/review")
+    .post(clientController.addReview)
+    .delete(clientController.removeReview)
 
 module.exports = router;
